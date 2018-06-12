@@ -6,7 +6,8 @@ Node::Node()
 
 }
 
-Node::Node(int const value, int* next, int* prev)
+Node::~Node()
 {
-
+  delete next;
+  delete prev;
 }

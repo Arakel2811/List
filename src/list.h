@@ -42,14 +42,14 @@ class List
       * @param index is an index of element.
       * @return Function returns value of element.
       */
-      int search_by_index(unsigned int index);
+//TODO      int search_by_index(unsigned int index);
       
       /**
        * @brief Function search an element by value.
        * @param value is the value of element.
        * @return Function returns index of element.
        */
-      unsigned int search_by_value(int value);
+//TODO      unsigned int search_by_value(int value);
       
       /**
        * @brief Function sets the value by index
@@ -74,6 +74,11 @@ class List
        * @brief Default constructor of class List. 
        */
       ~List();
+
+      /**
+       *@brief Function prints list.
+      */
+      void print();
 };
 #endif
 

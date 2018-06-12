@@ -6,8 +6,9 @@ class Node
       public:
         int value;
         Node* next;
-        Node* previus;
+        Node* prev;
         Node();
         Node(int const val, int* nx, int* prv);
+        ~Node();
 };
 #endif
