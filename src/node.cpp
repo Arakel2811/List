@@ -1,5 +1,5 @@
 #include "node.h"
-
+#include <iostream>
 
 Node::Node()
 {
@@ -8,6 +8,5 @@ Node::Node()
 
 Node::~Node()
 {
-  delete next;
-  delete prev;
+  std::cout << "called Node destructor !!!" << std::endl;
 }
