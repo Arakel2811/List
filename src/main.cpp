@@ -40,5 +40,17 @@ int main()
   a.print();
   std::cout<< "----------swap-----------" <<std::endl;
 
+  a.push(111);
+  a.print();
+  std::cout<< "----------push-----------" <<std::endl;
+
+  a.push(455);
+  a.print();
+  std::cout<< "----------push-----------" <<std::endl;
+
+  a.pop();
+  a.print();
+  std::cout<< "----------pop-----------" <<std::endl;
+
   return 0;
 }

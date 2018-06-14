@@ -1,5 +1,6 @@
 #include "list.h"
 #include <iostream>
+#include <assert.h>
 
 List::List()
 {
@@ -170,4 +171,51 @@ void List::print()
     std::cout << i << ") " << node->value << std::endl;
     node = node->next;
   }
+}
+
+bool List::push(int value)
+{
+  Node* new_node = new Node();
+  new_node->value = value;
+  if(0 == length){
+    head  = new_node;
+    tail  = new_node;
+    ++length;
+    return true;
+  }
+  Node* temp = tail;
+  new_node->prev = temp;
+  temp->next = new_node;
+  tail = new_node;
+  ++length;
+  if(tail->prev) {
+    return true;
+  }
+  return false;
+}
+
+bool List::pop()
+{
+  if(0 == length) {
+    return true;
+  }
+  if(1 == length) {
+    delete head;
+    head = NULL;
+    tail = NULL;
+    --length;
+    return true;
+  }
+  Node* old = tail;
+  assert(NULL != old);
+  tail = tail->prev;
+  tail->next = NULL;
+  assert(NULL != tail);
+  old->prev = NULL;
+  delete old;
+  --length;
+  if(tail) {
+    return true;
+  }
+  return false;
 }

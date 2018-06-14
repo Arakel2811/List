@@ -79,6 +79,17 @@ class List
        *@brief Function prints list.
       */
       void print();
+      
+      /**
+       * @brief returns the last element.
+       */
+      bool pop();
+
+      /**
+       * @brief adds element from the beggining. 
+       */
+      bool push(int value);
+
 };
 #endif
 
