@@ -35,6 +35,9 @@ List::List(List& list)
 
 void List::add(unsigned int index, int value)
 { 
+   if(index > length) {
+     return;
+   }
    Node* h = head;
    Node* node = new Node();
    node->value = value;
