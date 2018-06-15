@@ -165,7 +165,7 @@ List& List::operator = (const List& list)
 
 List::~List()
 {
-  std::cout << "called Node destructor !!!" << std::endl;
+  std::cout << "called List destructor !!!" << std::endl;
 }
 
 void List::print()
