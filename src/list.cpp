@@ -1,6 +1,7 @@
 #include "list.h"
 #include <iostream>
 #include <assert.h>
+#include <limits.h>
 
 List::List()
 {
@@ -115,7 +116,7 @@ int List::search_by_value(int value) const
   int i = 0;
   Node * n = head;
   while(NULL != n) {
-    if(value = n->value) {
+    if(value == n->value) {
       return i;
     }
     n = n->next;
@@ -222,3 +223,24 @@ bool List::pop()
   }
   return false;
 }
+
+
+int List::get_head()
+{
+    if(NULL != head) {
+        return head->value;
+    } else {
+        return INT_MAX; 
+    }
+}
+
+int List::get_tail()
+{
+    if(NULL != tail) {
+        return tail->value;
+    } else {
+        return INT_MAX;
+    }
+}
+
+

@@ -81,14 +81,24 @@ class List
       void print();
       
       /**
-       * @brief returns the last element.
+       * @brief Function returns the last element.
        */
       bool pop();
 
       /**
-       * @brief adds element from the beggining. 
+       * @brief Function adds element from the beggining. 
        */
       bool push(int value);
+
+      /**
+       * @brief Function returns head of list.
+       */
+      int get_head();
+
+      /**
+       * @brief Function returns tail of list;
+       */
+      int get_tail();
 
 };
 #endif
