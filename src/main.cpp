@@ -1,4 +1,5 @@
 #include "list.h"
+#include "stack.h"
 #include  <iostream>
 
 
@@ -51,6 +52,6 @@ int main()
   a.pop();
   a.print();
   std::cout<< "----------pop-----------" <<std::endl;
-
+  std::cout << "=======================================" << std::endl;
   return 0;
 }

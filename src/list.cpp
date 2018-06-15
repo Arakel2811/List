@@ -243,4 +243,7 @@ int List::get_tail()
     }
 }
 
-
+int List::get_size()
+{
+    return length;
+}

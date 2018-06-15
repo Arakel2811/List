@@ -4,7 +4,7 @@
 
 class List
 {
-    private:
+    protected:
       Node* head;
       Node* tail;
       int length;
@@ -99,6 +99,12 @@ class List
        * @brief Function returns tail of list;
        */
       int get_tail();
+
+      /**
+       * @brief Function returns size of List.
+       * @return Fucntion return length member.
+       */
+      int get_size();
 
 };
 #endif
