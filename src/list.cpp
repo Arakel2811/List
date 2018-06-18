@@ -1,7 +1,5 @@
-#include "list.h"
 #include <iostream>
-#include <assert.h>
-#include <limits.h>
+#include <list.h>
 
 List::List()
 {
@@ -12,238 +10,191 @@ List::List()
 
 List::List(int value)
 {
-  Node* node = new Node();
-  node->value = value;
-  head = tail = node;
-  length = 1;
+    Node* node = new Node(value);
+    head = tail = node;
+    length = 1;
 }
 
 List::List(List& list)
 {
-  Node* node = list.head;
-  Node* first = new Node();
-  Node* current = first;
-  while(node){
-    current->value = node->value;
-    current->next = node->next;
-    current->prev = node->prev;
-    node = node->next;
-    ++length;  
-  }
-  head = first;
-  tail = current;
+    head = list.head;
+    tail = list.tail;
+    length = list.length;
 }
 
-void List::add(unsigned int index, int value)
-{ 
-   if(index > length) {
-     return;
-   }
-   Node* h = head;
-   Node* node = new Node();
-   node->value = value;
-   if(0 == index) {
-      node->next = h;
-      if(h){
-        h->prev = node;
-      } else {
+void List::add(int value)
+{
+    if (head == NULL) {
+        Node* node = new Node(value);
+        head = tail = node;
+        length = 1;
+    } else if (length == 1) {
+        Node* node = new Node(value);
         tail = node;
-      }
-      node->prev = NULL;
-      head = node;
-   } else if(length == index) {
-        node->next = NULL;
-        node->prev = tail;
+        tail->prev = head;
+        tail->next = NULL;
+        head->next = tail;
+        length++;
+    } else {
+        Node* node = new Node(value);
+        Node* last = head;
+        for (int i = 0; i < length - 1; ++i) {
+            last = last->next;
+        }
         tail->next = node;
+        node->prev = tail;
+        node->next = NULL;
         tail = node;
-   } else {
-       Node* prev = head;
-       for(int i = 0; i < index - 1 && prev; ++i) {
-         prev = prev->next;
-       }
-       Node* next = prev->next;
-       prev->next = node;
-       node->prev = prev;
-       node->next = next;
-       next->prev = node;
-   }
-    ++length;
+        length++;
+    }
 }
 
 void List::remove(unsigned int index)
 {
-  if(index > length - 1 ) {
-    return ;
-  }
-  if(0 == index) {
-    Node* cur_head = head->next;
-    cur_head->prev = NULL;
-    delete head;
-    head = cur_head;
-  } else if(length - 1 == index) {
-      Node* cur_tail = tail->prev;
-      cur_tail->next = NULL;
-      Node* old_tail = tail;
-      delete old_tail;
-      tail = cur_tail;
-  } else { 
-    Node* k = head;
-    for(int i = 0; i < index; ++i) {
-      k = k->next;
+    if(0 == index) {
+        Node* current_head = head->next;
+        current_head->prev = NULL;
+        delete head;
+        head = current_head;
+        --length;
+    } else if (length - 1 == index) {
+        Node* current_tail = tail->prev;
+        current_tail->next = NULL;
+        delete tail;
+        tail = current_tail;
+        --length;
+    } else {
+        Node* del_elm = head;
+        for (int i = 0; i < index; ++i) {
+            del_elm = del_elm->next;
+        }
+        Node* prev_elm = del_elm->prev;
+        Node* next_elm = del_elm->next;
+        delete del_elm;
+        prev_elm->next = next_elm;
+        next_elm->prev = prev_elm;
+        --length;
     }
-    Node* prev = k->prev;
-    Node* next = k->next;
-    next->prev = prev;
-    prev->next = next;
-    delete k;
-  }
-  --length;
 }
 
-int List::search_by_index(unsigned int index) const {
-  if(index > length - 1 ) {
-    return -2;
-  }
-  Node* k = head;
-  for(int i = 0; i < index; ++i) {
-    k = k->next;
-  }
-  return k->value; 
-}
-
-int List::search_by_value(int value) const
+int List::search_by_index(unsigned int index)
 {
-  int i = 0;
-  Node * n = head;
-  while(NULL != n) {
-    if(value == n->value) {
-      return i;
+    Node* node = head;
+    for (int i = 0; i < index; ++i) {
+        node = node->next;
     }
-    n = n->next;
-    ++i;
-  }
-  return -2;
+    return node->value;
+}
+
+unsigned int List::search_by_value(int value)
+{
+    Node* node = head;
+    for (int i = 0; i < length; ++i) {
+        if(node->value == value) {
+            return i;
+        }
+        node = node->next;
+    }
 }
 
 void List::set(unsigned int index, int value)
-{  
-  Node* k = head;
-  for(int i = 0; i < index; ++i) {
-    k = k->next;
-  }
-  k->value = value;
+{
+    Node* node = head;
+    for (int i = 0; i < index; ++i) {
+        node = node->next;
+    }
+    node->value = value;
 }
 
-void List::swap(unsigned int first_index, unsigned int second_index)
+void List::swap(unsigned int f, unsigned int s)
 {
-  if((first_index > length - 1) || (second_index > length - 1)) {
-    return;
-  }
-  Node* k1 = head;
-  for(int i = 0; i < first_index; ++i) {
-    k1 = k1->next;
-  }
-  Node* swap1 = k1;
-  Node* k2 = head;
-  for(int i = 0; i < second_index; ++i) {
-    k2 = k2->next;
-  }
-  Node* swap2 = k2;
-  int tmp = swap1->value;
-  swap1->value = swap2->value;
-  swap2->value = tmp;
+    Node* first_element = head;
+    Node* second_element = head;
+    for (int i = 0; i < f; ++i) {
+        first_element = first_element->next;
+    }
+    for (int j = 0; j < s; ++j) {
+        second_element = second_element->next;
+    }
+
+    int temp = first_element->value;
+    first_element->value = second_element->value;
+    second_element->value = temp;
 }
 
 List& List::operator = (const List& list)
 {
-  std::cout << "====" << std::endl;
-  head = list.head;
-  tail = list.tail;
-  length = list.length;
-  return *this;
-}
-
-List::~List()
-{
-  std::cout << "called List destructor !!!" << std::endl;
+    head = list.head;
+    tail = list.tail;
+    length = list.length;
+    return *this;
 }
 
 void List::print()
 {
-  Node* node = head;
-  for(int i = 0; i < length; ++i) {
-    std::cout << i << ") " << node->value << std::endl;
-    node = node->next;
-  }
+    Node* node = head;
+    for(int i = 0; i < length; ++i) {
+        std::cout << "index: " << i << " value: " << node->value << std::endl;
+        node = node->next;
+    }
 }
 
-bool List::push(int value)
-{
-  Node* new_node = new Node();
-  new_node->value = value;
-  if(0 == length){
-    head  = new_node;
-    tail  = new_node;
-    ++length;
-    return true;
-  }
-  Node* temp = tail;
-  new_node->prev = temp;
-  temp->next = new_node;
-  tail = new_node;
-  ++length;
-  if(tail->prev) {
-    return true;
-  }
-  return false;
+void List::push(int value) {
+    add(value);
 }
 
-bool List::pop()
+void List::pop()
 {
-  if(0 == length) {
-    return true;
-  }
-  if(1 == length) {
-    delete head;
-    head = NULL;
-    tail = NULL;
+    if (1 == length) {
+        delete head;
+        head = NULL;
+        tail = NULL;
+        length = 0;
+    } else {
+        Node* tl = tail;
+        tail = tail->prev;
+        tail->next = NULL;
+        tl->prev = NULL;
+        delete tl;
+    } 
     --length;
-    return true;
-  }
-  Node* old = tail;
-  assert(NULL != old);
-  tail = tail->prev;
-  tail->next = NULL;
-  assert(NULL != tail);
-  old->prev = NULL;
-  delete old;
-  --length;
-  if(tail) {
-    return true;
-  }
-  return false;
 }
 
-
-int List::get_head()
+int List::get_head_value()
 {
-    if(NULL != head) {
-        return head->value;
-    } else {
-        return INT_MAX; 
-    }
+    return head->value;
 }
 
-int List::get_tail()
+int List::get_tail_value()
 {
-    if(NULL != tail) {
-        return tail->value;
-    } else {
-        return INT_MAX;
-    }
+    return tail->value;
 }
 
-int List::get_size()
+int List::get_length()
 {
     return length;
 }
+
+bool List::empty()
+{
+    if (0 == length) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+List::~List()
+{
+
+}
+
+
+
+
+
+
+
+
+
+

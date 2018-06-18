@@ -1,48 +1,38 @@
-TARGET	:= war 
-HEADER  := $(wildcard src/*.h)
-SOURCE	:= $(wildcard src/*.cpp)
-DEPS     := $(patsubst src/%.cpp, deps/%.dep, $(SOURCE))
-OBJECT	:= $(patsubst src/%.cpp, obj/%.o, $(SOURCE))
-DIR_bin := $(addprefix bin/, $(TARGET))
-PROJECT_DIR := $(shell pwd)
-INCLUDE_PATH := -I$(PROJECT_DIR)/src
-CC		:= g++
+SOURCES := $(wildcard src/*.cpp)
+OBJECTS := $(patsubst src/%.cpp, obj/%.o, $(SOURCES))
+TESTS :=  $(sort $(dir $(wildcard ./tests/*/)))
+DEPENDS := $(patsubst src/%.cpp, deps/%.dep, $(SOURCES))
+INCLUDES := -I./src
 
-
-$(TARGET): $(OBJECT) $(HEADER)
+bin/program : $(OBJECTS)
 	@mkdir -p bin
-	@$(CC) $^ -o bin/$@
+	g++ -std=c++11 $(OBJECTS) -o $@
 
-obj/%.o: src/%.cpp
-	@mkdir -p obj
-	@$(CC) -c $^ $(INCLUDE_PATH) -o $@ 
 
-dep/%.dep : src/%.cpp
+obj/%.o : src/%.cpp 
+	@mkdir -p ./obj
+	g++ -std=c++11 -c $< $(INCLUDES) -o $@
+
+deps/%.dep : src/%.cpp
 	@mkdir -p ./deps
-	@$(CC) -MM $< -MT "$@ $(patsubst %.dep, %.o, $@)" -o $@ -I./src
-  
-	-include $(DEPS)
+	@g++ -MM $< -MT "$@ $(subst %.dep, %.o, $@)" -o $@ $(INCLUDES)
 
-.PHONY: clean
-clean: 
-	@echo " Cleaning data...."
-	@rm -rf bin
-	@rm -rf ./tests/*.o
-	@rm -rf test_results test_results.txt
-	@rm -rf ./docs/doxygen
-	@rm -rf obj
-	@echo " Data cleaned!!"
+-include $(DEPENDS)
 
-.PHONY: doxygen
-doxygen:
-	@echo " Doxygen documentation making is in process."
-	@doxygen Doxyfile	
-	@echo " Doxygen is ready :D"
+.PHONY : clean docs test
+clean :
+	@echo "cleaning up"
+	@rm -rf  deps obj bin docs/doxygen test_results.txt
+	for dir in $(TESTS); do \
+		$(MAKE) -C $$dir clean ; \
+	done
+	
+docs : 
+	@mkdir -p docs/doxygen
+	@doxygen docs/config
 
-.PHONY: test
-test: 
-	@cd ./tests && $(MAKE)
-
-
-
-
+test : 
+	@touch ./test_results.txt
+	for dir in $(TESTS); do \
+		$(MAKE) -C $$dir; \
+	done

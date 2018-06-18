@@ -1,60 +1,61 @@
 #ifndef QUEUE_H
 #define QUEUE_H
+
 #include "list.h"
 
-
-
-class Queue :private List
+class Queue
 {
+    private:
+        List list;
     public:
+        
         /**
-         * @brief Default constructor.
+         * @breif Default constructor.
          */
         Queue();
-
+        
         /**
-         * @brief Constructor with parameters.
+         * @breif Constructor with parapetres.
+         * @param value is a input value.
          */
         Queue(int value);
 
         /**
-         * @brief Function add element to the Queue.
-         * @param value is a new value.
+         * @breif Function checks for an empty Stack.
+         *  return true if Stack empty.
          */
-        void push_back(int value);
+        bool empty();
 
         /**
-         * @brief Function remove the first element and return it.
+         * @breif Function return size of Stack.
          */
-        int pop_front();
+        int size();
 
         /**
-         * @brief Function deletes all elements of the Queue.
-         */
-        void make_empty();
-
-        /**
-         * @brief Function return first element of the Queue.
+         * @breif Function return oldest element in the queue.
          */
         int front();
 
         /**
-         * @brief Function return last element of the Queue.
+         * @breif Function return last element in the queue.
          */
         int back();
-        /**
-         * Function return size of Queue.
-         */
-        int get_size();
 
         /**
-         * @brief Function check if the Queue is empty.
+         * @breif Fucntion adds element in Stack.
+         * @param value parameter is a input value.
          */
-        bool is_empty();
+        void push(int value);
 
         /**
-         * @brief Function print all elements in Queue.
+         * @breif Function delete top element in the Stack.
+         */
+        void pop();
+
+        /**
+         * @breif Function prints all elements in Stack.
          */
         void print();
 };
+
 #endif

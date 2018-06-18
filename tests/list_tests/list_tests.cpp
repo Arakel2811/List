@@ -1,4 +1,4 @@
-#include <list.h>
+#include "../src/list.h"
 #include <limits.h>
 #include <cstddef>
 #include <assert.h>
@@ -9,37 +9,12 @@ void test_add()
 {
     std::cout << "---------testing add()---------" << std::endl;
     List list;
-    unsigned int i0 = 0;
-    int v0 = 10;
-    list.add(i0, v0);
-    int r0 = list.search_by_index(i0);
-    assert(v0 == r0);
-    std::cout << "first add pass" << std::endl;
+    int element = 100;
+    list.add(100);
+    int resault = list.search_by_index(0);
+    assert(element == resault);
+    std::cout << "testing add() function for element argument pass" << std::endl;
 
-    unsigned int i1 = 1;
-    int v1 = 20;
-    list.add(i1, v1);
-    int r1 = list.search_by_index(i1);
-    assert(v1 == r1);
-    std::cout << "add to the end pass" << std::endl;
-
-    int v3 = 30;
-    list.add(i1, v3);
-    int r3=list.search_by_index(i1);
-    assert(v3 == r3);
-    std::cout << "add between two nodes pass" << std::endl;
-
-    int v4 = 30;
-    list.add(i0, v4);
-    int r4=list.search_by_index(i0);
-    assert(v4 == r4);
-    std::cout << "add to the beginning pass" << std::endl;
-
-    unsigned int i_wrong = 30;
-    list.add(i_wrong, v4);
-    std::cout << "add to the wrong index pass" << std::endl;
-
-    std::cout << "add pass" << std::endl;
 }
 
 void test_search_by_index()
@@ -48,8 +23,8 @@ void test_search_by_index()
     int element1 = 25;
     int element2 = 45;
     List list;
-    list.add(0, element1);
-    list.add(1, element2);
+    list.add(element1);
+    list.add(element2);
 
     int resault1 = list.search_by_index(0);
     int resault2 = list.search_by_index(1);
@@ -66,8 +41,8 @@ void test_search_by_value()
     int element1 = 0;
     int element2 = 1;
     List list;
-    list.add(element1, 25);
-    list.add(element2, 45);
+    list.add(25);
+    list.add(45);
 
     int resault1 = list.search_by_value(25);
     int resault2 = list.search_by_value(45);
@@ -83,8 +58,8 @@ void test_swap()
 {
     std::cout << "---------testing swap()---------" << std::endl;
     List list;
-    list.add(0, 25);
-    list.add(1, 50);
+    list.add(25);
+    list.add(50);
     int element1 = list.search_by_index(0);
     int element2 = list.search_by_index(1);
     list.swap(0,1);

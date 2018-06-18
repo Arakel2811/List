@@ -1,128 +1,133 @@
 #ifndef LIST_H
 #define LIST_H
-#include "node.h"
+
+#include <cstddef>
 
 class List
 {
-    protected:
-      Node* head;
-      Node* tail;
-      int length;
+    private:
+        class Node
+            {
+               public:
+                    int value;
+                    Node* next;
+                    Node* prev;
+                    /**
+                     * @brief Default constructor.
+                     */
+                    Node()
+                    {
+                    }    
+                    
+                    /**
+                     * @brief Constructor with parameters.
+                     */
+                    Node(int v) : value(v), next(NULL), prev(NULL)
+                    {
+                    }
+            };
+        Node* head;
+        Node* tail;
+        int length;
     public:
-      /**
-       * @brief Default constructor of class List. 
-       */
-      List();
+        /**
+         * @brief Default constructor.
+         */
+        List();
 
-      /**
-       * @brief Constructor with parameters of class List.
-       */
-      List(int value);
+        /**
+         * @brief Constructor with parameters.
+         */
+        List(int value);
 
-      /**
-       * @brief Copy constructor of class List.
-       */
-      List(List& list);
+        /**
+         * @brief Copy constructor.
+         */
+        List(List& list);
 
-      /**
-       * @brief Function add adds an element in List.
-       * @param index is an index of List
-       * @param value is value of element.
-       */
-      void add(unsigned int index, int value);
+        /**
+         * @brief Function add adds an element in List.
+         * @param value is an value of element.
+         */
+        void add(int value);
 
-      /**
-       * @brief Function removes an element in list by index.
-       * @param index is an index of list.
-       */
-      void remove(unsigned int index);
+        /**
+         * @brief Function removes an element in list by index.
+         * @param index is an index of List.
+         */
+        void remove(unsigned int index);
 
-      /**
-      * @brief Function search an element by index.
-      * @param index is an index of element.
-      * @return Function returns value of element.
-      */
-      int search_by_index(unsigned int index) const;
-      
-      /**
-       * @brief Function search an element by value.
-       * @param value is the value of element.
-       * @return Function returns index of element.
-       */
-      int search_by_value(int value) const;
-      
-      /**
-       * @brief Function sets the value by index
-       * @param index is an index of List
-       * @param value is value of element.
-       */
-      void set(unsigned int index, int value);
+        /**
+         * @brief Function search an element by index.
+         * @param index is an index of element.
+         * @return Function returns value of element.
+         */
+        int search_by_index(unsigned int index);
 
-      /**
-       * @brief Function changes the values of first_index and second_index
-       * @param first_index is an index of List
-       * @param second_index is an index of List.
-       */
-      void swap(unsigned int first_index, unsigned int second_index);
-     
-      /**
-       * @brief Default constructor of class List. 
-       */
-      List& operator = (const List& list);
-     
-      /**
-       * @brief Default constructor of class List. 
-       */
-      ~List();
+        /**
+         * @brief Function search element by value.
+         * @param valie is a value of element.
+         */
+        unsigned int search_by_value(int value);
 
-      /**
-       *@brief Function prints list.
-      */
-      void print();
-      
-      /**
-       * @brief Function returns the last element.
-       */
-      bool pop();
+        /**
+         * @brief Function sets the value by index.
+         * @param index is an index of List.
+         * @param value is an value of element.
+         */
+        void set(unsigned int index, int value);
 
-      /**
-       * @brief Function adds element from the beggining. 
-       */
-      bool push(int value);
+        /**
+         * @brief Function changes the values of f and s
+         * @param f is a first index of List.
+         * @param s is a second index of List.
+         */
+        void swap(unsigned int f, unsigned int s);
 
-      /**
-       * @brief Function returns head of list.
-       */
-      int get_head();
+        /**
+         * @brief Overloading = operator.
+         * @param list is a List class exemplar.
+         * @return List by reference.
+         */
+        List& operator = (const List& list);
 
-      /**
-       * @brief Function returns tail of list;
-       */
-      int get_tail();
+        /**
+         * @brief Function prints elements of List.
+         */
+        void print();
 
-      /**
-       * @brief Function returns size of List.
-       * @return Fucntion return length member.
-       */
-      int get_size();
+        /**
+         * @brief Function add element at the end of the List.
+         * @param value this is an added element.
+         */
+        void push(int value);
+
+        /**
+         * @brief Function deeletes last element in List.
+         */
+        void pop();
+
+        /**
+         * @brief Fucntion return head value.
+         */
+        int get_head_value();
+
+        /**
+         * @brief Function return tail value.
+         */
+        int get_tail_value();
+
+        /**
+         * @breif Function checks for an empty List.
+         */
+        bool empty();
+        
+        /**
+         * @brief Function return length member.
+         */
+        int get_length();
+        ~List();
 
 };
+
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,59 +1,63 @@
 #include "list.h"
 #include "queue.h"
-#include <iostream>
 
 Queue::Queue()
 {
 
 }
 
-Queue::Queue(int value) : List(value)
+Queue::Queue(int value)
 {
-
+    list.add(value);
 }
 
-void Queue::push_back(int value)
+bool Queue::empty()
 {
-    List::push(value);
-}
-
-int Queue::pop_front()
-{
-    int first = List::get_head();
-    List::remove(0);
-    return first;
-}
-
-void Queue::make_empty()
-{
-    while(!is_empty()) {
-      List::pop();
+    if (list.empty()) {
+        return true;
+    } else {
+        return false;
     }
+}
+
+int Queue::size()
+{
+    return list.get_length();
 }
 
 int Queue::front()
 {
-    return List::get_head();
+    int size = list.get_length();
+    if (size > 0) {
+    int value = list.search_by_index(size - 1);
+    return value; 
+    } else {
+        return -2;
+    }
 }
 
 int Queue::back()
 {
-    return List::get_tail();
+    int size = list.get_length();    
+    if (size > 0) {
+        int value = list.search_by_index(0);
+        return value;
+    } else {
+        return -2;
+    }
 }
 
-int Queue::get_size()
+void Queue::push(int value)
 {
-    return List::get_size();
+    list.add(value);
 }
 
-bool Queue::is_empty()
+void Queue::pop()
 {
-    bool resault = (NULL == head);
-    return resault;
+    list.pop();
 }
 
 void Queue::print()
 {
-    List::print();
+    list.print();
 }
-

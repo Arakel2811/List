@@ -1,55 +1,52 @@
-#include <iostream>
+#include "list.h"
 #include "stack.h"
-
-
 
 Stack::Stack()
 {
-    
+
 }
 
-Stack::Stack(int value) : List(value)
+Stack::Stack(int value)
 {
-    
+    list.add(value);
 }
 
-bool Stack::push(int value)
+bool Stack::empty()
 {
-    return List::push(value);
+    if (list.empty()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-int Stack::pop()
+int Stack::size()
 {
-    int value = head->value;
-    List::pop();
-    return value;
+    return list.get_length();
 }
 
-int Stack::peek()
+int Stack::top()
 {
-   return head->value;
+    int size = list.get_length();
+    return list.search_by_index(size - 1);
 }
 
-bool Stack::is_empty()
+void Stack::push(int value)
 {
-    bool resault = (NULL == head);
-    return resault;
+    list.add(value);
 }
 
-bool Stack:: make_empty()
+void Stack::pop()
 {
-    while(!is_empty()) {
-        List::pop();
+    int size = list.get_length();
+    if (size > 0) {
+        list.remove(size - 1);
+    } else {
+        return;
     }
 }
 
 void Stack::print()
 {
-    List::print(); 
+    list.print();
 }
-
-unsigned int Stack::get_size()
-{
-    List::get_size();
-}
-

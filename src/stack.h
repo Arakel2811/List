@@ -2,57 +2,55 @@
 #define STACK_H
 
 #include "list.h"
-#include "node.h"
 
-class Stack : private List
+class Stack
 {
+    private:
+        List list;
     public:
+        
+        /**
+         * @breif Default constructor.
+         */
+        Stack();
+        
+        /**
+         * @breif Constructor with parapetres.
+         * @param value is a input value.
+         */
+        Stack(int value);
 
-      /**
-       * @brief Default constructor.
-       */
-      Stack();
-      
-      /**
-       * @brief Constructor with parameters.
-       */
-      Stack(int value);
+        /**
+         * @breif Function checks for an empty Stack.
+         *  return true if Stack empty.
+         */
+        bool empty();
 
-      /**
-       * @brief Function add element in top of Stack.
-       * @param value is value of new element in Stack.
-       * @return Fuction return bool.
-       */
-      bool push(int value);
+        /**
+         * @breif Function return size of Stack.
+         */
+        int size();
 
-      /**
-       * @brief Function delete element in top of Stack.
-       * @ Function returns deleted value.
-       */
-      int pop();
+        /**
+         * @breif Function return last input element.
+         */
+        int top();
 
-      /**
-       * @brief Function return top value of the Stack.
-       * @return Function return int value.
-       */
-      int peek();
+        /**
+         * @breif Fucntion adds element in Stack.
+         * @param value parameter is a input value.
+         */
+        void push(int value);
 
-      /**
-       * @brief Fuction checks if the Stack empty.
-       * @return Function return bool value.
-       */
-      bool is_empty();
-      
-      /**
-       * @brief Function removes all elements from the stack.
-       */
-      bool make_empty();
+        /**
+         * @breif Function delete top element in the Stack.
+         */
+        void pop();
 
-      /**
-       * @brief Function print the Stack.
-       */
-      void print();
-      unsigned int get_size();
+        /**
+         * @breif Function prints all elements in Stack.
+         */
+        void print();
 };
 
 #endif
